@@ -5,10 +5,27 @@ signal login_succeeded(local_id, id_token)
 signal login_failed(error_message)
 
 # Substitua pela sua Web API Key do Firebase
-var FIREBASE_API_KEY = "AIzaSyDFtOj5Kmvzq3XUah_jTcce2xA9Ig2_fa0"
+var FIREBASE_API_KEY = ""
 
 var id_token: String = ""
 var local_id: String = ""
+
+func _ready():
+	_load_api_key()
+
+func _load_api_key():
+	var config = ConfigFile.new()
+	# Tenta carregar o nosso arquivo de segredos
+	var err = config.load("res://secrets.cfg")
+	
+	if err != OK:
+		print("ERRO: Não foi possível carregar o 'secrets.cfg'.")
+		print("Certifique-se de que o arquivo existe e tem a sua [firebase] api_key.")
+	else:
+		# Carrega a chave do arquivo e a armazena na variável
+		FIREBASE_API_KEY = config.get_value("firebase", "api_key", "")
+		if FIREBASE_API_KEY.is_empty():
+			print("ERRO: 'api_key' não encontrada dentro de [firebase] no 'secrets.cfg'")
 
 func register_user(email, password):
 	var url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + FIREBASE_API_KEY

@@ -5,7 +5,7 @@ signal login_succeeded(local_id, id_token)
 signal login_failed(error_message)
 
 # Substitua pela sua Web API Key do Firebase
-var FIREBASE_API_KEY = "SUA_CHAVE_AQUI"
+var FIREBASE_API_KEY = "AIzaSyDFtOj5Kmvzq3XUah_jTcce2xA9Ig2_fa0"
 
 var id_token: String = ""
 var local_id: String = ""
@@ -51,8 +51,13 @@ func _send_request(url: String, body: Dictionary, request_type: String) -> void:
 			login_failed.emit("Erro de conexão inicial.")
 		http_request.queue_free()
 
-func _on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, request_type: String, http_node: HTTPRequest) -> void:
-	
+func _on_request_completed(result: int,
+response_code: int,
+headers: PackedStringArray,
+body: PackedByteArray,
+request_type: String,
+http_node: HTTPRequest) -> void:
+		
 	var json = JSON.new()
 	var body_string = body.get_string_from_utf8()
 	
@@ -89,5 +94,10 @@ func _on_request_completed(result: int, response_code: int, headers: PackedStrin
 			registration_failed.emit("Ocorreu um erro desconhecido.")
 		else:
 			login_failed.emit("Ocorreu um erro desconhecido.")
-
-	http_node.queue_free()	
+	
+	http_node.queue_free()
+	
+func logout():
+	id_token = ""
+	local_id = ""
+	print("Usuário deslogado com sucesso.")

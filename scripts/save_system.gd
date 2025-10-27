@@ -56,6 +56,7 @@ func _send_request(url: String, method: HTTPClient.Method, request_type: String,
 			load_failed.emit()
 		http_request.queue_free()
 
+# Transforma a resposta de bytes em texto
 func _on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, request_type: String, http_node: HTTPRequest) -> void:
 	
 	var json = JSON.new()

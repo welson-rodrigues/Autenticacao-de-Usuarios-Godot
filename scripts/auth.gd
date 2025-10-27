@@ -101,7 +101,6 @@ func _on_request_completed(result: int, response_code: int, headers: PackedStrin
 	
 	var json = JSON.new()
 	
-	
 	var body_string = body.get_string_from_utf8()
 	
 	var parse_error = json.parse(body_string)

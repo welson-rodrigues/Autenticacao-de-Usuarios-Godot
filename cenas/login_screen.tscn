@@ -50,9 +50,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Login"
 
-[node name="Auth" type="Node" parent="VBoxContainer/HBoxContainer/LoginButton"]
-script = ExtResource("1_dnl36")
-
 [node name="LogoutButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 visible = false
 layout_mode = 2
@@ -61,3 +58,6 @@ text = "Sair"
 
 [node name="FeedbackLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+
+[node name="Auth" type="Node" parent="."]
+script = ExtResource("1_dnl36")

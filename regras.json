@@ -1,0 +1,19 @@
+{
+  "rules": {
+    // Bloqueia tudo por padrão
+    ".read": false,
+    ".write": false,
+
+    // Cria uma pasta "users"
+    "users": {
+
+      // ID do usuário com base na URL
+      "$uid": {
+        // Permite ler e escrever apenas se o ID do token de login
+        // for o mesmo ID da URL
+        ".read": "auth.uid == $uid",
+        ".write": "auth.uid == $uid"
+      }
+    }
+  }
+}

@@ -52,3 +52,8 @@ text = "Bem-vindo!"
 [node name="LogoutButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Sair"
+
+[connection signal="pressed" from="VBoxContainer/AddMoedaButton" to="." method="_on_add_moeda_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/AddNivelButton" to="." method="_on_add_nivel_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/LogoutButton" to="." method="_on_logout_button_pressed"]

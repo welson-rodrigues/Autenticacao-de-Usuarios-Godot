@@ -66,3 +66,7 @@ func _on_load_succeeded(data: Dictionary):
 
 func _on_load_failed():
 	feedback_label.text = "Erro ao carregar dados. Tente novamente."
+
+
+func _on_logout_button_pressed() -> void:
+	pass # Replace with function body.

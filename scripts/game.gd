@@ -24,7 +24,6 @@ func _ready():
 	current_coins = Auth.player_data.get("moedas", 0)
 	current_level = Auth.player_data.get("nivel", 1) 
 	
-
 	update_ui()
 	feedback_label.text = "Dados carregados. Bem-vindo!"
 

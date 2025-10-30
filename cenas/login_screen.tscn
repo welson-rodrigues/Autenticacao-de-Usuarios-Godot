@@ -61,3 +61,7 @@ layout_mode = 2
 
 [node name="Auth" type="Node" parent="."]
 script = ExtResource("1_dnl36")
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/RegisterButton" to="." method="_on_register_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/LoginButton" to="." method="_on_login_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/LogoutButton" to="." method="_on_logout_button_pressed"]

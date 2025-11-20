@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcvgvlnwemvca"]
+
+[ext_resource type="Script" uid="uid://bbfu3vdbvgacn" path="res://scripts/game.gd" id="1_qn4hi"]
+
+[node name="GameAntigo" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qn4hi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.0
+offset_top = -108.5
+offset_right = 73.0
+offset_bottom = 108.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MoedasLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Moedas: 0"
+
+[node name="NivelLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Nível: 1"
+
+[node name="AddMoedaButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "+1 Moeda"
+
+[node name="AddNivelButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "+1 Nível"
+
+[node name="SaveButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Salvar na Nuvem"
+
+[node name="FeedbackLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Bem-vindo!"
+
+[node name="LogoutButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Sair"
+
+[connection signal="pressed" from="VBoxContainer/AddMoedaButton" to="." method="_on_add_moeda_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/AddNivelButton" to="." method="_on_add_nivel_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/LogoutButton" to="." method="_on_logout_button_pressed"]

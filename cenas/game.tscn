@@ -1,18 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://dcvgvlnwemvca"]
+[gd_scene load_steps=5 format=3 uid="uid://bp641wm4gpaus"]
 
 [ext_resource type="Script" uid="uid://bbfu3vdbvgacn" path="res://scripts/game.gd" id="1_cibmi"]
+[ext_resource type="PackedScene" uid="uid://d1jvuja6qt6og" path="res://cenas/player.tscn" id="2_emr73"]
+[ext_resource type="PackedScene" uid="uid://cxdrbju53x42k" path="res://cenas/moeda.tscn" id="3_lenm3"]
 
-[node name="Game" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oobul"]
+
+[node name="Game" type="Node2D"]
 script = ExtResource("1_cibmi")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -25,35 +24,67 @@ offset_bottom = 108.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MoedasLabel" type="Label" parent="VBoxContainer"]
+[node name="MoedasLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Moedas: 0"
 
-[node name="NivelLabel" type="Label" parent="VBoxContainer"]
+[node name="NivelLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Nível: 1"
 
-[node name="AddMoedaButton" type="Button" parent="VBoxContainer"]
+[node name="AddMoedaButton" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "+1 Moeda"
 
-[node name="AddNivelButton" type="Button" parent="VBoxContainer"]
+[node name="AddNivelButton" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "+1 Nível"
 
-[node name="SaveButton" type="Button" parent="VBoxContainer"]
+[node name="SaveButton" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Salvar na Nuvem"
 
-[node name="FeedbackLabel" type="Label" parent="VBoxContainer"]
+[node name="FeedbackLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Bem-vindo!"
 
-[node name="LogoutButton" type="Button" parent="VBoxContainer"]
+[node name="LogoutButton" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Sair"
 
-[connection signal="pressed" from="VBoxContainer/AddMoedaButton" to="." method="_on_add_moeda_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/AddNivelButton" to="." method="_on_add_nivel_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/LogoutButton" to="." method="_on_logout_button_pressed"]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(570, 623)
+scale = Vector2(58.984966, 2.6228182)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_oobul")
+
+[node name="Player" parent="." instance=ExtResource("2_emr73")]
+position = Vector2(374, 99)
+scale = Vector2(0.8, 0.8)
+
+[node name="moeda" parent="." instance=ExtResource("3_lenm3")]
+position = Vector2(889, 521)
+scale = Vector2(0.4, 0.4)
+
+[node name="moeda2" parent="." instance=ExtResource("3_lenm3")]
+position = Vector2(1035, 503)
+scale = Vector2(0.4, 0.4)
+
+[node name="moeda3" parent="." instance=ExtResource("3_lenm3")]
+position = Vector2(45.000008, 539)
+scale = Vector2(0.4, 0.4)
+
+[node name="moeda4" parent="." instance=ExtResource("3_lenm3")]
+position = Vector2(561, 524)
+scale = Vector2(0.4, 0.4)
+
+[node name="moeda5" parent="." instance=ExtResource("3_lenm3")]
+position = Vector2(737, 529.99994)
+scale = Vector2(0.4, 0.4)
+
+[connection signal="body_entered" from="moeda" to="." method="_on_moeda_body_entered"]
+[connection signal="body_entered" from="moeda2" to="." method="_on_moeda_2_body_entered"]
+[connection signal="body_entered" from="moeda3" to="." method="_on_moeda_3_body_entered"]
+[connection signal="body_entered" from="moeda4" to="." method="_on_moeda_4_body_entered"]
+[connection signal="body_entered" from="moeda5" to="." method="_on_moeda_5_body_entered"]

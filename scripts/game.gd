@@ -1,47 +1,53 @@
-extends Control
+extends Node2D
 
-@onready var moedas_label: Label = $VBoxContainer/MoedasLabel
-@onready var nivel_label: Label = $VBoxContainer/NivelLabel
-@onready var add_moeda_button: Button = $VBoxContainer/AddMoedaButton
-@onready var add_nivel_button: Button = $VBoxContainer/AddNivelButton
-@onready var save_button: Button = $VBoxContainer/SaveButton
-@onready var feedback_label: Label = $VBoxContainer/FeedbackLabel
-@onready var logout_button: Button = $VBoxContainer/LogoutButton
+@onready var moedas_label: Label = $CanvasLayer/VBoxContainer/MoedasLabel
+@onready var save_button: Button = $CanvasLayer/VBoxContainer/SaveButton
+@onready var feedback_label: Label = $CanvasLayer/VBoxContainer/FeedbackLabel
+@onready var logout_button: Button = $CanvasLayer/VBoxContainer/LogoutButton
+@onready var player: CharacterBody2D = $Player
 
-var current_coins: int = 0
-var current_level: int = 1
+var coletar_moedas_ids: Array = []
 
 func _ready():
-	# Conectar os botões
-	add_moeda_button.pressed.connect(_on_add_moeda_button_pressed)
-	add_nivel_button.pressed.connect(_on_add_nivel_button_pressed)
 	save_button.pressed.connect(_on_save_button_pressed)
 	logout_button.pressed.connect(_on_logout_button_pressed)
-	
 	SaveSystem.save_succeeded.connect(_on_save_succeeded)
 	SaveSystem.save_failed.connect(_on_save_failed)
 	
-	current_coins = Auth.player_data.get("moedas", 0)
-	current_level = Auth.player_data.get("nivel", 1) 
+	player.coletar_moedas.connect(_on_moeda_coletada)
+
+	player.moedas = Auth.player_data.get("moedas", 0)
+	var pos_x = Auth.player_data.get("pos_x", player.global_position.x)
+	var pos_y = Auth.player_data.get("pos_y", player.global_position.y)
+	player.global_position = Vector2(pos_x, pos_y)
+	
+	coletar_moedas_ids = Auth.player_data.get("moedas_coletadas", [])
+	
+	_destruir_moedas_coletadas()
 	
 	update_ui()
 	feedback_label.text = "Dados carregados. Bem-vindo!"
 
-func _on_add_moeda_button_pressed():
-	current_coins += 1
+func _on_moeda_coletada(moedas_id: String):
+	if not coletar_moedas_ids.has(moedas_id):
+		coletar_moedas_ids.append(moedas_id)
+
 	update_ui()
 
-func _on_add_nivel_button_pressed():
-	current_level += 1
-	update_ui()
+func _destruir_moedas_coletadas():
+	for moeda in get_tree().get_nodes_in_group("moedas"):
+		if moeda.moedas_id in coletar_moedas_ids:
+			moeda.queue_free()
 
 func _on_save_button_pressed():
 	feedback_label.text = "Salvando na nuvem..."
 	
 	var data_to_save = {
-		"moedas": current_coins,
-		"nivel": current_level,
-		"ultimo_login": Time.get_unix_time_from_system() 
+		"moedas": player.moedas,
+		"pos_x": player.global_position.x,
+		"pos_y": player.global_position.y,
+		
+		"moedas_coletadas": coletar_moedas_ids
 	}
 	
 	SaveSystem.save_data(data_to_save)
@@ -57,5 +63,4 @@ func _on_save_failed():
 	feedback_label.text = "Erro ao Salvar."
 
 func update_ui():
-	moedas_label.text = "Moedas: " + str(current_coins)
-	nivel_label.text = "Nível: " + str(current_level)
+	moedas_label.text = "Moedas: " + str(player.moedas)

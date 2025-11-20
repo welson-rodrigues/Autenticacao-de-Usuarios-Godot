@@ -8,10 +8,7 @@ extends Control
 @onready var feedback_label: Label = $VBoxContainer/FeedbackLabel
 
 func _ready():
-	# Avisa o Godot qual função chamar quando cada botão for clicado
-	register_button.pressed.connect(_on_register_button_pressed)
-	login_button.pressed.connect(_on_login_button_pressed)
-	
+	# Avisa o Godot qual função chamar quando cada botão for clicado	
 	Auth.registration_succeeded.connect(_on_registration_succeeded)
 	Auth.registration_failed.connect(_on_registration_failed)
 	Auth.login_succeeded.connect(_on_login_succeeded)
